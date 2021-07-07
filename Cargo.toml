@@ -1,0 +1,32 @@
+[package]
+name = "nswi170-final-project"
+version = "0.1.0"
+authors = ["quantumferret"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies.arduino-uno]
+git = "https://github.com/rahix/avr-hal"
+rev = "885e8ec6d6d2fe34f26a1e2697a99f41092f0985"
+
+[dependencies]
+panic-halt = "0.2.0"
+avr-device = "0.3.0"
+
+[profile.dev.package.compiler_builtins]
+#overflow-checks = false
+debug-assertions = false
+
+[profile.dev]
+panic = "abort"
+lto = true
+opt-level = "s"
+overflow-checks = false
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+debug = true
+lto = true
+opt-level = "s"
