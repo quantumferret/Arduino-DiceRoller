@@ -81,7 +81,7 @@ fn main() -> ! {
 
     let mut roller = DiceRoller::new();
     let mut rng = Rng::new(millis());
-    let mut random: u32 = 0;
+    let mut random: u32;
     let mut stopwatch = stopwatch::Stopwatch::new();
 
     loop {

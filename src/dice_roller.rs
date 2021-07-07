@@ -72,7 +72,7 @@ impl DiceRoller {
         self.dice.get()
     }
 
-    pub(crate) fn roll(&mut self, mut rng: &mut Rng) {
+    pub(crate) fn roll(&mut self, rng: &mut Rng) {
         self.roll = 0;
         for _ in 0..self.throws {
             self.roll += (rng.rand_range(self.get_dice()) + 1) as u16;
