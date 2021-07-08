@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  board-ci:
+  build:
     name: Arduino Uno
     strategy:
       fail-fast: true
@@ -25,11 +25,17 @@ jobs:
           toolchain: nightly-2021-01-07
           override: true
           components: rust-src
+
+        - uses: actions/cache@v2
+          with:
+            path: |
+              ~/.cargo/registry
+              ~/.cargo/git
+              target
+            key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
       - name: Install avr-gcc, binutils, and libc
         run: sudo apt-get install -y avr-libc binutils-avr gcc-avr
       - name: Build
         run: cargo build --release
-        uses: actions/upload-artifact@v2
-        with:
-          name: artifact
-          path: $(echo pwd)/target/avr-atmega328p/release/nswi170-final-project.elf
+
