@@ -29,8 +29,8 @@ jobs:
         run: sudo apt-get install -y avr-libc binutils-avr gcc-avr
       - name: Build
         run: cargo build --release
-          - name: Upload Artifact
-          uses: actions/upload-artifact@v2
-          with:
-            name: artifact
-            path: $(echo pwd)/target/avr-atmega328p/release/nswi170-final-project.elf
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: $(echo pwd)/target/avr-atmega328p/release/nswi170-final-project.elf
