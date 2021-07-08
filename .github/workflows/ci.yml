@@ -41,5 +41,5 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: nswi170-final-project
-          path: target/avr-atmega328p/nswi170-final-project.elf
+          path: target/avr-atmega328p/release/nswi170-final-project.elf
 
