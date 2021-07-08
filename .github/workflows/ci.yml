@@ -16,8 +16,16 @@ jobs:
           - arduino-uno
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -25,14 +33,6 @@ jobs:
           toolchain: nightly-2021-01-07
           override: true
           components: rust-src
-        - uses: actions/cache@v2
-          with:
-            path: |
-              ~/.cargo/registry
-              ~/.cargo/git
-              target
-            key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-
       - name: Install avr-gcc, binutils, and libc
         run: sudo apt-get install -y avr-libc binutils-avr gcc-avr
       - name: Build
