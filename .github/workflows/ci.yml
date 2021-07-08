@@ -25,7 +25,6 @@ jobs:
           toolchain: nightly-2021-01-07
           override: true
           components: rust-src
-
         - uses: actions/cache@v2
           with:
             path: |
