@@ -5,20 +5,13 @@ A project for NSWI170 Computer Systems course, written in Rust. It was complicat
 
 
 ### Flashing an Arduino Uno with the binary distributable (Only for Linux and MacOS)
-1. In a Bash shell, clone the repository
+1. In a Bash (or similar) shell, clone the repository
     `git clone https://github.com/quantumferret/Arduino-DiceRoller.git`
-    
-2. Click on the `Actions` tab in the repository.
 
-3. Click on the most recent workflow run with a green check next to it
+2. Run `cd Arduino-DiceRoller` in your shell
 
-4. Scroll down to the `Artifacts` box, and click on `nswi170-final-project` to download the nswi170-final-project.elf file needed to flash the board.
-
-5. In your shell, `cd Arduino-DiceRoller`
-
-6. Flash the board
-    `./uno_runner.sh <path-to-downloaded-elf-file>/nswi170-final-project.elf`
+3. Flash the board
+    `./uno_runner.sh artifacts/nswi170-final-project.elf`
     
   Possible issues:
-    You may need to unpack the `nswi170-final-project` download, if your operating system does not do so for you. Standard Bash unzipping tools should do the trick if this is the case.
     Make sure `uno_runner.sh` is executable! If in doubt, run `chmod +x uno_runner.sh` inside the project directory.
