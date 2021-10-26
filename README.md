@@ -8,7 +8,7 @@ A project for NSWI170 Computer Systems course, written in Rust. It was complicat
 1. In a Bash (or similar) shell, clone the repository
     `git clone https://github.com/quantumferret/Arduino-DiceRoller.git`
 
-2. Run `cd Arduino-DiceRoller` in your shell
+2. cd into the project directory: `cd Arduino-DiceRoller`
 
 3. Flash the board
     `./uno_runner.sh artifacts/nswi170-final-project.elf`
