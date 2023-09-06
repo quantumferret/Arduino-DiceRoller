@@ -8,6 +8,7 @@ mod display;
 mod mini_rng;
 mod stopwatch;
 
+use arduino_hal::prelude::*;
 use crate::button::{
     Button,
     State::{Debouncing, Down, Up},
@@ -25,7 +26,7 @@ const MILLIS_INCREMENT: u32 = PRESCALER * TIMER_COUNTS / 16000; //currently set 
 static MILLIS_COUNTER: avr_device::interrupt::Mutex<cell::Cell<u32>> =
     avr_device::interrupt::Mutex::new(cell::Cell::new(0));
 
-fn millis_init(tc0: arduino_uno::pac::TC0) {
+fn millis_init(tc0: arduino_hal::pac::TC0) {
     tc0.tccr0a.write(|w| w.wgm0().ctc());
     tc0.ocr0a.write(|w| unsafe { w.bits(TIMER_COUNTS as u8) });
     tc0.tccr0b.write(|w| match PRESCALER {
@@ -57,11 +58,11 @@ pub fn millis() -> u32 {
     avr_device::interrupt::free(|cs| MILLIS_COUNTER.borrow(cs).get())
 }
 
-#[arduino_uno::entry]
+#[arduino_hal::entry]
 fn main() -> ! {
-    let peripherals = arduino_uno::Peripherals::take().unwrap();
+    let peripherals = arduino_hal::Peripherals::take().unwrap();
 
-    let mut pins = arduino_uno::Pins::new(peripherals.PORTB, peripherals.PORTC, peripherals.PORTD);
+    let pins = arduino_hal::pins!(peripherals);
 
     millis_init(peripherals.TC0);
 
@@ -69,15 +70,15 @@ fn main() -> ! {
     unsafe { avr_device::interrupt::enable() };
 
     let mut display = display::Display {
-        latch_pin: pins.d4.into_output(&mut pins.ddr).downgrade(),
-        clock_pin: pins.d7.into_output(&mut pins.ddr).downgrade(),
-        data_pin: pins.d8.into_output(&mut pins.ddr).downgrade(),
+        latch_pin: pins.d4.into_output().downgrade(),
+        clock_pin: pins.d7.into_output().downgrade(),
+        data_pin: pins.d8.into_output().downgrade(),
         bit_order: display::BitOrder::MsbFirst,
     };
 
-    let mut button1 = Button::new(pins.a1.into_floating_input(&mut pins.ddr).downgrade());
-    let mut button2 = Button::new(pins.a2.into_floating_input(&mut pins.ddr).downgrade());
-    let mut button3 = Button::new(pins.a3.into_floating_input(&mut pins.ddr).downgrade());
+    let mut button1 = Button::new(pins.a1.into_floating_input().downgrade());
+    let mut button2 = Button::new(pins.a2.into_floating_input().downgrade());
+    let mut button3 = Button::new(pins.a3.into_floating_input().downgrade());
 
     let mut roller = DiceRoller::new();
     let mut rng = Rng::new(millis());

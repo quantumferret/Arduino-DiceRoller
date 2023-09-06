@@ -1,8 +1,8 @@
 use crate::button::State::*;
 use crate::millis;
-use arduino_uno::hal::port::mode::{Floating, Input};
-use arduino_uno::hal::port::Pin;
-use arduino_uno::prelude::*;
+use arduino_hal::hal::port::mode::{Floating, Input};
+use arduino_hal::hal::port::Pin;
+use arduino_hal::prelude::*;
 
 const DEBOUNCE_TIME: u32 = 30;
 
@@ -29,7 +29,7 @@ impl Button {
     }
 
     pub fn get_pulse(&mut self) -> State {
-        if self.pin.is_high().void_unwrap() {
+        if self.pin.is_high() {
             self.state = Up;
             return self.state;
         }

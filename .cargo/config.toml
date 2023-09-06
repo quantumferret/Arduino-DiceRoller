@@ -3,9 +3,7 @@ target = "avr-atmega328p.json"
 
 [target.'cfg(target_arch = "avr")']
 runner = "./uno_runner.sh"
-#rustflags = [
-#    "-C", "inline-threshold=225",
-#]
+
 
 [unstable]
 build-std = ["core"]

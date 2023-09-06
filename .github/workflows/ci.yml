@@ -30,7 +30,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly-2021-01-07
+          toolchain: stable
           override: true
           components: rust-src
       - name: Install avr-gcc, binutils, and libc

@@ -15,13 +15,11 @@
   "linker-flavor": "gcc",
   "linker-is-gnu": true,
   "llvm-target": "avr-unknown-unknown",
-  "no-builtins": true,
   "max-atomic-width": 8,
   "no-default-libraries": false,
   "pre-link-args": {
     "gcc": [
-      "-mmcu=atmega328p",
-      "-Wl,--as-needed"
+      "-mmcu=atmega328p"
     ]
   },
   "target-c-int-width": "16",

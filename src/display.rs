@@ -1,7 +1,7 @@
 use crate::dice_roller::DiceRoller;
-use arduino_uno::hal::port::mode::Output;
-use arduino_uno::hal::port::Pin;
-use arduino_uno::prelude::*;
+use arduino_hal::hal::port::mode::Output;
+use arduino_hal::hal::port::Pin;
+use arduino_hal::prelude::*;
 
 const SEGMAP: [u8; 11] = [
     0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8, 0x80, 0x90, 0xFF,
@@ -32,44 +32,44 @@ impl Display {
             match self.bit_order {
                 BitOrder::LsbFirst => {
                     if v & 1 == LOW {
-                        self.data_pin.set_low().void_unwrap()
+                        self.data_pin.set_low()
                     } else {
-                        self.data_pin.set_high().void_unwrap()
+                        self.data_pin.set_high()
                     }
                     v >>= 1;
                 }
                 BitOrder::MsbFirst => {
                     if v & 128 != 0 {
-                        self.data_pin.set_high().void_unwrap()
+                        self.data_pin.set_high()
                     } else {
-                        self.data_pin.set_low().void_unwrap()
+                        self.data_pin.set_low()
                     }
                     v <<= 1;
                 }
             }
 
-            self.clock_pin.set_high().void_unwrap();
-            self.clock_pin.set_low().void_unwrap();
+            self.clock_pin.set_high();
+            self.clock_pin.set_low();
             i += 1;
         }
     }
 
     pub fn write_number_to_segment(&mut self, segment: u8, value: u8, show_dot: bool) {
-        self.latch_pin.set_low().void_unwrap();
+        self.latch_pin.set_low();
         self.shift_out(if show_dot {
             show_decimal(SEGMAP[value as usize])
         } else {
             SEGMAP[value as usize]
         });
         self.shift_out(DIGIT[segment as usize]);
-        self.latch_pin.set_high().void_unwrap();
+        self.latch_pin.set_high();
     }
 
     pub fn write_d(&mut self, segment: u8) {
-        self.latch_pin.set_low().void_unwrap();
+        self.latch_pin.set_low();
         self.shift_out(LETTER_D);
         self.shift_out(DIGIT[segment as usize]);
-        self.latch_pin.set_high().void_unwrap();
+        self.latch_pin.set_high();
     }
 
     pub fn display_u16(&mut self, number: u16) {

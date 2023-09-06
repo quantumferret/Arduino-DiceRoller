@@ -6,21 +6,23 @@ license-file = "LICENSE.md"
 readme = "README.md"
 homepage = "https://github.com/quantumferret/Arduino-DiceRoller"
 repository = "https://github.com/quantumferret/Arduino-DiceRoller"
-keywords = ["no-std", "avr", "arduino-uno", "embedded", "dice-roller"]
-edition = "2018"
+keywords = ["no-std", "avr", "arduino-hal", "embedded", "dice-roller"]
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[dependencies.arduino-uno]
+[dependencies.arduino-hal]
 git = "https://github.com/rahix/avr-hal"
-rev = "885e8ec6d6d2fe34f26a1e2697a99f41092f0985"
+branch = "main"
+features = ["arduino-uno"]
 
 [dependencies]
 panic-halt = "0.2.0"
-avr-device = "0.3.0"
+avr-device = "0.5.2"
+embedded-hal = "0.2.3"
 
-[profile.dev.package.compiler_builtins]
-debug-assertions = false
+#[profile.dev.package.compiler_builtins]
+#debug-assertions = false
 
 [profile.dev]
 panic = "abort"
