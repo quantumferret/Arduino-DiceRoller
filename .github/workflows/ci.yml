@@ -33,8 +33,10 @@ jobs:
           toolchain: stable
           override: true
           components: rust-src
-      - name: Install avr-gcc, binutils, and libc
-        run: sudo apt-get install -y avr-libc binutils-avr gcc-avr
+      - name: Install Linux packages
+        run: sudo apt-get install -y avr-libc gcc-avr pkg-config avrdude libudev-dev build-essential
+#      - name: Install avr-gcc, binutils, and libc
+#        run: sudo apt-get install -y avr-libc binutils-avr gcc-avr
       - name: Build
         run: cargo build --release
 
